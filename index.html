@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sonu Thakur — Technical Product Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:          #f2f8fc;
+  --bg-card:     #ffffff;
+  --bg-dark:     #0a1e30;
+  --bg-mid:      #1b3f5e;
+  --ink:         #0a1e30;
+  --ink-soft:    #1b3f5e;
+  --ink-muted:   #5c8fb0;
+  --blue:        #1668a8;
+  --blue-mid:    #1b3f5e;
+  --blue-light:  #a6cfea;
+  --blue-pale:   #daeaf6;
+  --border:      #a6cfea;
+  --border-light:#daeaf6;
+  --ease:        cubic-bezier(0.22,1,0.36,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue-light); border-radius: 2px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 48px;
+  height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(242,248,252,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light);
+  transition: border-color 0.3s;
+}
+.nav-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 18px; color: var(--ink); text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.nav-links { display: flex; gap: 8px; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-soft); text-decoration: none;
+  padding: 6px 14px; border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-links a:hover { background: var(--blue-pale); color: var(--blue); }
+.nav-links .nav-cta {
+  background: var(--ink); color: var(--bg);
+  padding: 7px 18px; border-radius: 20px;
+}
+.nav-links .nav-cta:hover { background: var(--blue-mid); color: #fff; }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px;
+}
+.hamburger span { display: block; width: 20px; height: 1.5px; background: var(--ink); transition: all 0.3s var(--ease); }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.mobile-drawer {
+  display: none; position: fixed;
+  top: 0; right: 0; bottom: 0; width: min(280px, 76vw);
+  background: var(--bg-card); z-index: 200;
+  padding: 72px 28px 36px; flex-direction: column; gap: 4px;
+  transform: translateX(100%); transition: transform 0.45s var(--ease);
+  border-left: 1px solid var(--border-light);
+  box-shadow: -8px 0 40px rgba(10,30,48,0.08);
+}
+.mobile-drawer.open { transform: translateX(0); }
+.mobile-drawer a {
+  font-size: 14px; font-weight: 500; color: var(--ink-soft);
+  text-decoration: none; padding: 10px 14px; border-radius: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+.mobile-drawer a:hover { background: var(--blue-pale); color: var(--blue); }
+.drawer-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,30,48,0.25); z-index: 150;
+  opacity: 0; transition: opacity 0.3s;
+}
+.drawer-overlay.open { opacity: 1; }
+
+/* ── HERO ── */
+#hero {
+  padding: 120px 48px 80px;
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 300px;
+  gap: 60px; align-items: center;
+  min-height: 100vh;
+}
+.hero-left { }
+.hero-status {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 20px; padding: 6px 14px;
+  font-size: 12px; font-weight: 500; color: var(--blue);
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(10,30,48,0.06);
+  animation: fadeUp 0.8s var(--ease) 0.1s both;
+}
+.status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 2px rgba(34,197,94,0.25); }
+  50%      { box-shadow: 0 0 0 5px rgba(34,197,94,0.1); }
+}
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 1.08; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 20px;
+  animation: fadeUp 0.8s var(--ease) 0.2s both;
+}
+.hero-title em { font-style: italic; color: var(--blue); }
+.hero-sub {
+  font-size: 16px; font-weight: 400; line-height: 1.75;
+  color: var(--ink-soft); max-width: 520px; margin-bottom: 36px;
+  animation: fadeUp 0.8s var(--ease) 0.3s both;
+}
+.hero-sub strong { font-weight: 600; color: var(--ink); }
+.hero-ctas {
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  animation: fadeUp 0.8s var(--ease) 0.4s both;
+}
+.btn-solid {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.01em;
+  color: #fff; background: var(--ink);
+  padding: 12px 24px; border-radius: 8px; text-decoration: none;
+  transition: background 0.2s, transform 0.2s var(--ease);
+}
+.btn-solid:hover { background: var(--blue-mid); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 500;
+  color: var(--ink-soft); background: var(--bg-card);
+  border: 1px solid var(--border); padding: 12px 24px; border-radius: 8px;
+  text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); transform: translateY(-1px); }
+.btn-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 8px;
+  color: var(--ink-soft); background: var(--bg-card);
+  border: 1px solid var(--border); text-decoration: none;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s var(--ease), background 0.2s;
+  flex-shrink: 0;
+}
+.btn-icon:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-pale); transform: translateY(-1px); }
+
+/* Hero right: photo + badges */
+.hero-right {
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+  animation: fadeUp 0.8s var(--ease) 0.35s both;
+}
+.hero-photo-wrap {
+  position: relative; width: 220px; height: 220px;
+}
+.hero-photo {
+  width: 220px; height: 220px; border-radius: 50%;
+  object-fit: cover; object-position: top center;
+  border: 3px solid var(--bg-card);
+  box-shadow: 0 4px 40px rgba(10,30,48,0.14);
+  background: var(--blue-pale);
+  display: block;
+}
+.hero-photo-ring {
+  position: absolute; inset: -6px; border-radius: 50%;
+  border: 1.5px dashed var(--blue-light);
+  animation: spin 18s linear infinite;
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.hero-badges {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+}
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--blue-mid); background: var(--blue-pale);
+  border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── PAGE LOAD CURTAIN ── */
+#curtain {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg-dark);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+#curtain.gone { opacity: 0; transform: translateY(-100%); }
+.curtain-logo {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 32px; color: rgba(242,248,252,0.9);
+  animation: curtainPulse 1s ease-in-out infinite alternate;
+}
+@keyframes curtainPulse {
+  from { opacity: 0.5; } to { opacity: 1; }
+}
+
+/* ── HERO FLOATING PARTICLES ── */
+#hero-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  pointer-events: none; z-index: 0; opacity: 0.45;
+}
+
+/* keep hero content above canvas */
+#hero { position: relative; z-index: 1; }
+
+/* ── TYPING CURSOR ── */
+.cursor-blink {
+  display: inline-block; width: 2px; height: 0.85em;
+  background: var(--blue); margin-left: 3px; vertical-align: middle;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── BADGE ENTRANCE STAGGER ── */
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 400; letter-spacing: 0.06em;
+  color: var(--blue-mid); background: var(--blue-pale);
+  border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px;
+  opacity: 0; transform: translateY(8px) scale(0.94);
+  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease),
+              background 0.2s, box-shadow 0.2s;
+}
+.badge.badge-in { opacity: 1; transform: translateY(0) scale(1); }
+.badge:hover { background: var(--border); box-shadow: 0 2px 10px rgba(22,104,168,0.18); }
+
+/* ── MAGNETIC BUTTON WRAPPER ── */
+.mag-wrap { display: inline-block; position: relative; }
+
+/* ── CARD HOVER: PALETTE-MATCHED COLOUR FILLS ── */
+
+/* Work cards: deep navy-to-mid-blue gradient wash */
+.work-card {
+  position: relative; overflow: hidden;
+  background: var(--bg-card);
+  transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
+              transform 0.35s var(--ease), background 0.4s var(--ease);
+}
+.work-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,63,94,0.06) 0%, rgba(22,104,168,0.10) 100%);
+  opacity: 0; transition: opacity 0.4s var(--ease);
+  pointer-events: none; z-index: 0;
+}
+.work-card:hover {
+  border-color: #5c8fb0;
+  background: #f7fbff;
+  box-shadow: 0 12px 48px rgba(22,104,168,0.13), 0 2px 8px rgba(10,30,48,0.06);
+  transform: translateY(-4px);
+}
+.work-card:hover::before { opacity: 1; }
+.work-card:hover .work-card-title { color: var(--blue-mid); }
+.work-card:hover .work-card-tag  { color: var(--blue); }
+.work-card > * { position: relative; z-index: 1; }
+
+/* Impact cards: accent-blue tint + left border flash */
+.impact-card {
+  position: relative; overflow: hidden;
+  background: var(--bg-card);
+  border-left: 3px solid transparent;
+  transition: border-color 0.3s var(--ease), border-left-color 0.3s var(--ease),
+              box-shadow 0.35s var(--ease), transform 0.35s var(--ease),
+              background 0.4s var(--ease);
+}
+.impact-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(166,207,234,0.12) 0%, rgba(22,104,168,0.07) 100%);
+  opacity: 0; transition: opacity 0.4s var(--ease);
+  pointer-events: none; z-index: 0;
+}
+.impact-card:hover {
+  border-color: var(--border);
+  border-left-color: var(--blue);
+  background: #f4f9fd;
+  box-shadow: 0 10px 40px rgba(22,104,168,0.11), 0 2px 8px rgba(10,30,48,0.05);
+  transform: translateY(-4px);
+}
+.impact-card:hover::before { opacity: 1; }
+.impact-card:hover .impact-num  { color: var(--blue); }
+.impact-card:hover .impact-co   { letter-spacing: 0.22em; }
+.impact-card > * { position: relative; z-index: 1; }
+
+/* Expertise cards: pale blue wash with top border sweep */
+.exp-card {
+  position: relative; overflow: hidden;
+  background: var(--bg-card);
+  transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
+              transform 0.35s var(--ease), background 0.4s var(--ease);
+}
+.exp-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 0%;
+  background: linear-gradient(to bottom, rgba(166,207,234,0.18) 0%, rgba(218,234,246,0.06) 100%);
+  transition: height 0.45s var(--ease);
+  pointer-events: none; z-index: 0;
+}
+.exp-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(to right, var(--blue-mid), var(--blue), var(--blue-light));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.45s var(--ease);
+  z-index: 2;
+}
+.exp-card:hover {
+  border-color: #5c8fb0;
+  background: #f5fafd;
+  box-shadow: 0 12px 48px rgba(22,104,168,0.10), 0 2px 8px rgba(10,30,48,0.05);
+  transform: translateY(-4px);
+}
+.exp-card:hover::before { height: 100%; }
+.exp-card:hover::after  { transform: scaleX(1); }
+.exp-card:hover .exp-title { color: var(--blue-mid); }
+.exp-card:hover .exp-num   { color: var(--blue); letter-spacing: 0.32em; }
+.exp-card > * { position: relative; z-index: 1; }
+
+/* Think cards: soft slate-blue tint + arrow nudge */
+.think-card {
+  position: relative; overflow: hidden;
+  background: var(--bg-card);
+  transition: border-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
+              transform 0.35s var(--ease), background 0.4s var(--ease);
+}
+.think-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgba(218,234,246,0.35) 0%, rgba(166,207,234,0.15) 50%, rgba(22,104,168,0.05) 100%);
+  opacity: 0; transition: opacity 0.4s var(--ease);
+  pointer-events: none; z-index: 0;
+}
+.think-card:hover {
+  border-color: #5c8fb0;
+  background: #f5fafd;
+  box-shadow: 0 10px 44px rgba(22,104,168,0.10), 0 2px 8px rgba(10,30,48,0.05);
+  transform: translateY(-4px);
+}
+.think-card:hover::before { opacity: 1; }
+.think-card:hover .think-card-title { color: var(--blue-mid); }
+.think-card:hover .think-card-arrow { transform: translate(4px, -4px); color: var(--blue); }
+.think-card:hover .think-card-meta  { border-top-color: var(--border); }
+.think-card > * { position: relative; z-index: 1; }
+
+/* Stat blocks: already dark bg, use brighter blue on hover */
+.stat-block { transition: background 0.35s var(--ease); }
+.stat-block:hover { background: rgba(22,104,168,0.14); }
+.stat-block:hover .stat-num  { color: var(--blue-light); }
+.stat-block:hover .stat-label { color: rgba(218,234,246,0.85); }
+
+/* ── TIMELINE LINE DRAW ── */
+.tl-list {
+  position: relative;
+}
+.tl-line-fill {
+  position: absolute; left: -2px; top: 0; width: 2px;
+  background: var(--blue);
+  height: 0%;
+  transition: height 0.05s linear;
+  border-radius: 2px;
+}
+
+/* ── SECTION TITLE UNDERLINE WIPE ── */
+.section-title {
+  position: relative; display: inline-block;
+}
+.section-title::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0;
+  height: 2px; width: 0%;
+  background: linear-gradient(to right, var(--blue), var(--blue-light));
+  border-radius: 2px;
+  transition: width 0.7s var(--ease);
+}
+.section-title.title-in::after { width: 100%; }
+
+/* ── IMPACT NUM COUNT-UP FLASH ── */
+@keyframes numFlash {
+  0%   { color: var(--blue); }
+  100% { color: var(--ink); }
+}
+.impact-num.counted { animation: numFlash 0.6s var(--ease) forwards; }
+
+/* ── FLOATING TAG ANIMATION ── */
+@keyframes floatTag {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.hero-status { animation: fadeUp 0.8s var(--ease) 0.1s both, floatTag 4s ease-in-out 1.5s infinite; }
+
+/* ── SCROLL PROGRESS BAR ── */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 9000;
+  background: linear-gradient(to right, var(--blue), var(--blue-light));
+  width: 0%; transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ── SKILL BAR SHIMMER ── */
+.skill-bar-fill {
+  position: relative; overflow: hidden;
+}
+.skill-bar-fill::after {
+  content: '';
+  position: absolute; top: 0; left: -200%;
+  width: 80%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  animation: barShimmer 2.2s var(--ease) 1.4s 1 forwards;
+  opacity: 0;
+}
+@keyframes barShimmer {
+  0%   { left: -200%; opacity: 0; }
+  10%  { opacity: 1; }
+  100% { left: 200%; opacity: 0; }
+}
+
+/* ── STAT BAR ── */
+#stats {
+  background: var(--bg-dark); padding: 0;
+}
+.stats-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-left: 1px solid rgba(166,207,234,0.15);
+}
+.stat-block {
+  padding: 40px 36px;
+  border-right: 1px solid rgba(166,207,234,0.15);
+  border-top: none; border-bottom: none;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.stat-block::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--blue); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s var(--ease);
+}
+.stat-block:hover { background: rgba(22,104,168,0.08); }
+.stat-block:hover::after { transform: scaleX(1); }
+.stat-num {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 44px; color: #f2f8fc; line-height: 1; display: block; margin-bottom: 6px;
+}
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(166,207,234,0.65); display: block;
+}
+
+/* ── SHARED ── */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.08s; }
+.reveal-d2 { transition-delay: 0.16s; }
+.reveal-d3 { transition-delay: 0.24s; }
+.reveal-d4 { transition-delay: 0.32s; }
+
+.section-wrap { max-width: 1100px; margin: 0 auto; }
+.section-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--blue); display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+}
+.section-tag::before { content: '✦'; font-size: 8px; }
+.section-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 48px; line-height: 1.15;
+}
+.section-title em { font-style: italic; color: var(--blue); }
+
+/* ── CURRENTLY / WORK ── */
+#work { padding: 96px 48px; background: var(--bg); }
+
+.work-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.work-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 16px; padding: 32px 36px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
+}
+.work-card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+  transition: color 0.3s;
+}
+.tag-active {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e;
+}
+.tag-building {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: #f59e0b;
+}
+.work-card-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px; letter-spacing: -0.01em;
+  color: var(--ink); margin-bottom: 6px; line-height: 1.25;
+}
+.work-card-role {
+  font-size: 13px; font-weight: 500; color: var(--ink-muted); margin-bottom: 16px;
+}
+.work-card-body {
+  font-size: 14px; font-weight: 400; line-height: 1.75; color: var(--ink-soft);
+}
+.work-card-metrics {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+}
+.metric-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.06em;
+  color: var(--blue-mid); background: var(--blue-pale);
+  border: 1px solid var(--border-light); border-radius: 6px; padding: 4px 10px;
+}
+
+/* Wide card spanning both columns */
+.work-card-wide { grid-column: span 2; }
+
+/* ── ABOUT ── */
+#about { padding: 96px 48px; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.about-grid { display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: start; }
+.about-body {
+  font-size: 15px; font-weight: 400; line-height: 1.85; color: var(--ink-soft); margin-bottom: 20px;
+}
+.about-body strong { font-weight: 600; color: var(--ink); }
+.cert-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.cert-chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 400; letter-spacing: 0.08em;
+  color: var(--blue-mid); background: var(--blue-pale);
+  border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px;
+  transition: background 0.2s, transform 0.2s var(--ease);
+}
+.cert-chip:hover { background: var(--border); transform: translateY(-1px); }
+
+/* Skill bars */
+.skills-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 24px; display: block;
+}
+.skill-item { margin-bottom: 20px; }
+.skill-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.skill-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.skill-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--blue); }
+.skill-bar-bg { height: 3px; background: var(--border-light); border-radius: 2px; }
+.skill-bar-fill { height: 100%; background: linear-gradient(to right, var(--blue), var(--blue-light)); border-radius: 2px; width: 0%; transition: width 1.3s var(--ease); }
+
+/* ── IMPACT ── */
+#impact { padding: 96px 48px; background: var(--bg); }
+.impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.impact-card {
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 16px; padding: 32px 28px;
+}
+.impact-co {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 12px; display: block;
+  transition: letter-spacing 0.35s var(--ease);
+}
+.impact-num {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 48px; color: var(--ink); line-height: 1; display: block; margin-bottom: 6px;
+  transition: color 0.35s var(--ease);
+}
+.impact-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.impact-body { font-size: 13px; font-weight: 400; line-height: 1.75; color: var(--ink-soft); }
+
+/* ── TIMELINE ── */
+#timeline { padding: 96px 48px; background: var(--bg-card); border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light); }
+.tl-list { display: flex; flex-direction: column; border-left: 2px solid var(--border-light); margin-left: 8px; }
+.tl-item { padding: 0 0 44px 36px; position: relative; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -7px; top: 5px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--bg-card); border: 2px solid var(--border);
+  transition: border-color 0.2s, background 0.2s;
+}
+.tl-item:hover .tl-dot { background: var(--blue); border-color: var(--blue); }
+.tl-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 5px;
+}
+.tl-title { font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--ink); margin-bottom: 2px; letter-spacing: -0.01em; }
+.tl-co { font-size: 13px; font-weight: 500; color: var(--ink-muted); margin-bottom: 10px; }
+.tl-body { font-size: 14px; font-weight: 400; line-height: 1.8; color: var(--ink-soft); max-width: 600px; }
+.tl-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.tl-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-muted); border: 1px solid var(--border-light);
+  border-radius: 4px; padding: 3px 8px;
+  background: var(--bg);
+}
+
+/* ── EXPERTISE ── */
+#expertise { padding: 96px 48px; background: var(--bg); }
+.expertise-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.exp-card {
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 16px; padding: 32px 32px;
+}
+.exp-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--blue); display: block; margin-bottom: 16px;
+  transition: color 0.3s var(--ease), letter-spacing 0.35s var(--ease);
+}
+.exp-title { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--ink); margin-bottom: 12px; letter-spacing: -0.01em; transition: color 0.3s var(--ease); }
+.exp-body { font-size: 14px; font-weight: 400; line-height: 1.8; color: var(--ink-soft); }
+.exp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.exp-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--blue-mid); background: var(--blue-pale);
+  border: 1px solid var(--border-light); border-radius: 4px; padding: 3px 8px;
+}
+
+/* ── QUOTE ── */
+#quote {
+  padding: 80px 48px; background: var(--bg-dark);
+  text-align: center;
+}
+.quote-inner { max-width: 780px; margin: 0 auto; }
+.quote-mark {
+  font-family: 'Instrument Serif', serif; font-size: 72px; line-height: 0.5;
+  color: rgba(166,207,234,0.2); display: block; margin-bottom: 24px;
+}
+.quote-text {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(18px, 2.8vw, 28px); line-height: 1.6;
+  color: #f2f8fc; margin-bottom: 24px;
+}
+.quote-text .accent { color: var(--blue-light); font-style: normal; }
+.quote-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(166,207,234,0.5);
+}
+
+/* ── HOW I THINK ── */
+#thinking { padding: 96px 48px; background: var(--bg); }
+.thinking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 0; }
+.think-card {
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 16px; padding: 32px 32px;
+  display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
+}
+.think-card-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.think-card-type-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--blue);
+  flex-shrink: 0;
+}
+.think-card-title {
+  font-family: 'Instrument Serif', serif; font-size: 20px;
+  color: var(--ink); margin-bottom: 10px; line-height: 1.3; letter-spacing: -0.01em;
+  transition: color 0.3s var(--ease);
+}
+.think-card-body {
+  font-size: 13px; font-weight: 400; line-height: 1.75; color: var(--ink-soft); flex: 1;
+}
+.think-card-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-light);
+  transition: border-color 0.3s var(--ease);
+}
+.think-card-read {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-muted);
+}
+.think-card-arrow {
+  font-size: 14px; color: var(--blue);
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+}
+.think-card:hover .think-card-arrow { transform: translate(3px, -3px); }
+.think-card-wide { grid-column: span 2; }
+.medium-cta {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 32px; padding: 20px 24px;
+  background: var(--bg-card); border: 1px solid var(--border-light);
+  border-radius: 12px; text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s var(--ease);
+}
+.medium-cta:hover {
+  border-color: var(--border); box-shadow: 0 4px 20px rgba(10,30,48,0.06);
+  transform: translateY(-2px);
+}
+.medium-cta-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  background: var(--ink); display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; color: #fff;
+}
+.medium-cta-text { flex: 1; }
+.medium-cta-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); display: block; margin-bottom: 2px;
+}
+.medium-cta-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+.medium-cta-arrow { font-size: 16px; color: var(--ink-muted); }
+
+/* ── CONTACT ── */
+#contact { padding: 96px 48px; background: var(--bg); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.contact-heading {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: clamp(30px, 4vw, 52px); color: var(--ink);
+  line-height: 1.15; margin-bottom: 36px; letter-spacing: -0.02em;
+}
+.contact-links { display: flex; flex-direction: column; gap: 18px; }
+.contact-link-item { display: flex; flex-direction: column; gap: 3px; }
+.contact-link-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue);
+}
+.contact-link-value {
+  font-size: 15px; font-weight: 400; color: var(--ink-soft);
+  text-decoration: none; border-bottom: 1px solid transparent;
+  display: inline-block; transition: color 0.2s, border-color 0.2s;
+}
+.contact-link-value:hover { color: var(--blue); border-color: var(--blue-light); }
+
+.contact-form { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; padding: 36px; display: flex; flex-direction: column; gap: 24px; }
+.form-field { display: flex; flex-direction: column; gap: 7px; }
+.form-field label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted);
+}
+.form-field input, .form-field textarea {
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400; color: var(--ink);
+  background: var(--bg); border: 1px solid var(--border-light); border-radius: 8px;
+  padding: 10px 14px; outline: none; resize: none; width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-field input:focus, .form-field textarea:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(22,104,168,0.1);
+}
+.form-field textarea { min-height: 90px; }
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--blue-light); }
+.form-submit {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  color: #fff; background: var(--ink); border: none; border-radius: 8px;
+  padding: 13px 28px; cursor: pointer; align-self: flex-start;
+  transition: background 0.2s, transform 0.2s var(--ease);
+}
+.form-submit:hover { background: var(--blue-mid); transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg-dark); padding: 40px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(166,207,234,0.1); flex-wrap: wrap; gap: 20px;
+}
+.footer-mark {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 26px; color: rgba(242,248,252,0.85);
+}
+.footer-copy {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; color: rgba(166,207,234,0.45);
+}
+.footer-links { display: flex; gap: 20px; }
+.footer-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(166,207,234,0.5); text-decoration: none; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--blue-light); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-drawer { display: flex; }
+  .drawer-overlay { display: block; }
+
+  #hero { grid-template-columns: 1fr; gap: 40px; padding: 100px 24px 60px; min-height: auto; }
+  .hero-right { flex-direction: row; justify-content: flex-start; flex-wrap: wrap; }
+  .hero-photo-wrap { width: 140px; height: 140px; }
+  .hero-photo { width: 140px; height: 140px; }
+
+  .stats-inner { grid-template-columns: repeat(2, 1fr); }
+  #work, #about, #impact, #timeline, #expertise, #thinking, #quote, #contact { padding: 64px 24px; }
+  .work-grid, .impact-grid, .expertise-grid, .thinking-grid, .contact-grid { grid-template-columns: 1fr; }
+  .work-card-wide, .think-card-wide { grid-column: span 1; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  footer { flex-direction: column; align-items: flex-start; padding: 32px 24px; }
+}
+
+@media (max-width: 560px) {
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-block { padding: 28px 20px; }
+  .hero-title { font-size: clamp(34px, 10vw, 52px); }
+}
+/* ── ARTICLE READER MODAL ── */
+#article-overlay {
+  position: fixed; inset: 0; z-index: 5000;
+  background: rgba(10,30,48,0.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 24px; overflow-y: auto;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+}
+#article-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+#article-panel {
+  background: var(--bg-card); border-radius: 20px;
+  border: 1px solid var(--border-light);
+  width: 100%; max-width: 720px;
+  padding: 52px 56px 48px;
+  position: relative;
+  box-shadow: 0 32px 80px rgba(10,30,48,0.22);
+  transform: translateY(24px);
+  transition: transform 0.4s var(--ease);
+}
+#article-overlay.open #article-panel { transform: translateY(0); }
+#article-close {
+  position: absolute; top: 20px; right: 24px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg); border: 1px solid var(--border-light);
+  font-size: 18px; color: var(--ink-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  line-height: 1;
+}
+#article-close:hover { background: var(--blue-pale); color: var(--blue); }
+#article-body { }
+.art-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+}
+.art-type::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+.art-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(22px, 3.5vw, 34px); line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 12px;
+}
+.art-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em; color: var(--ink-muted);
+  margin-bottom: 36px; padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-light);
+}
+.art-body { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--ink-soft); }
+.art-body p { margin-bottom: 20px; }
+.art-body p:last-child { margin-bottom: 0; }
+.art-body h3 {
+  font-family: 'Instrument Serif', serif; font-size: 20px; color: var(--ink);
+  margin: 32px 0 12px; letter-spacing: -0.01em;
+}
+.art-body strong { font-weight: 600; color: var(--ink); }
+.art-body .art-highlight {
+  background: var(--blue-pale); border-left: 3px solid var(--blue);
+  padding: 14px 18px; border-radius: 0 8px 8px 0;
+  margin: 24px 0; font-style: italic; color: var(--blue-mid);
+  font-size: 14px;
+}
+#article-medium-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--blue); text-decoration: none;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+  width: 100%; transition: color 0.2s;
+}
+#article-medium-link:hover { color: var(--blue-mid); }
+@media (max-width: 680px) {
+  #article-panel { padding: 40px 24px 36px; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOAD CURTAIN -->
+<div id="curtain"><span class="curtain-logo">Sonu Thakur</span></div>
+
+<!-- HERO PARTICLE CANVAS -->
+<canvas id="hero-canvas"></canvas>
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scroll-progress"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Sonu Thakur</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#thinking">Writing</a></li>
+    <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" role="button" aria-label="Menu" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<nav class="mobile-drawer" id="mobileDrawer">
+  <a href="#work" onclick="closeDrawer()">Work</a>
+  <a href="#about" onclick="closeDrawer()">About</a>
+  <a href="#impact" onclick="closeDrawer()">Impact</a>
+  <a href="#thinking" onclick="closeDrawer()">Writing</a>
+  <a href="#expertise" onclick="closeDrawer()">Expertise</a>
+  <a href="#contact" onclick="closeDrawer()">Get in Touch</a>
+  <a href="https://medium.com/@sonuthakurwork" target="_blank" rel="noopener" onclick="closeDrawer()">Medium ↗</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-status">
+      <span class="status-dot"></span>
+      Open to new opportunities
+    </div>
+    <h1 class="hero-title">
+      $48M Impact.<br>
+      <em>Built through clarity,<br>not luck.</em>
+    </h1>
+    <p class="hero-sub">
+      <strong>Technical Product Manager</strong> with 6+ years delivering enterprise platform modernization, Agile transformation, and AI-enabled automation across fintech, media, and B2B SaaS. Based in Austin, TX.
+    </p>
+    <div class="hero-ctas">
+      <a href="#impact" class="btn-solid">See the Impact</a>
+      <a href="SonuThakur_resume.pdf" download="SonuThakur_Resume.pdf" class="btn-ghost">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="https://www.linkedin.com/in/sxs200286" target="_blank" rel="noopener" class="btn-icon" aria-label="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="https://medium.com/@sonuthakurwork" target="_blank" rel="noopener" class="btn-icon" aria-label="Medium">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <img
+        class="hero-photo"
+        src="https://framerusercontent.com/images/eM7EiApq7cVnGxmVjlFcWoPDlDg.jpg"
+        alt="Sonu Thakur"
+      >
+      <div class="hero-photo-ring"></div>
+    </div>
+    <div class="hero-badges">
+      <span class="badge">PMP</span>
+      <span class="badge">SAFe 6 POPM</span>
+      <span class="badge">CSPO</span>
+      <span class="badge">AWS Architect</span>
+      <span class="badge">Austin, TX</span>
+    </div>
+  </div>
+</section>
+
+<!-- STAT BAR -->
+<div id="stats">
+  <div class="stats-inner">
+    <div class="stat-block reveal">
+      <span class="stat-num">$48M</span>
+      <span class="stat-label">Business Impact</span>
+    </div>
+    <div class="stat-block reveal reveal-d1">
+      <span class="stat-num">79%</span>
+      <span class="stat-label">Manual Work Reduced</span>
+    </div>
+    <div class="stat-block reveal reveal-d2">
+      <span class="stat-num">19%</span>
+      <span class="stat-label">Sprint Predictability Gain</span>
+    </div>
+    <div class="stat-block reveal reveal-d3">
+      <span class="stat-num">6+</span>
+      <span class="stat-label">Years Delivering</span>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT I'M WORKING ON -->
+<section id="work">
+  <div class="section-wrap">
+    <p class="section-tag reveal">✦ Currently</p>
+    <h2 class="section-title reveal">What I'm <em>Working On</em></h2>
+    <div class="work-grid">
+      <div class="work-card reveal">
+        <div class="work-card-tag"><span class="tag-active"></span> Active</div>
+        <div class="work-card-title">Cutting Edge Tech</div>
+        <div class="work-card-role">Technical Product Manager · Sep 2025 – Present · Austin, TX</div>
+        <p class="work-card-body">Owns roadmap execution across infrastructure and logistics platforms for three concurrent enterprise initiatives. Driving ServiceNow and Jira workflow automation while aligning stakeholders from analyst to VP level.</p>
+        <div class="work-card-metrics">
+          <span class="metric-pill">↓20% Onboarding Cycle Time</span>
+          <span class="metric-pill">+30% Jira Adoption</span>
+          <span class="metric-pill">3 Enterprise Platforms</span>
+        </div>
+      </div>
+      <div class="work-card reveal reveal-d1">
+        <div class="work-card-tag"><span class="tag-building"></span> Open to Roles</div>
+        <div class="work-card-title">Next Opportunity</div>
+        <div class="work-card-role">Product Manager · Project Manager · Program Manager</div>
+        <p class="work-card-body">Looking for the next enterprise challenge: a team that takes product craft seriously, values structured delivery, and wants a PM who ships outcomes, not just features. Open to relocation for the right role.</p>
+        <div class="work-card-metrics">
+          <span class="metric-pill">Open to Relocation</span>
+          <span class="metric-pill">US-Based</span>
+          <span class="metric-pill">Available Now</span>
+        </div>
+      </div>
+      <div class="work-card work-card-wide reveal reveal-d2">
+        <div class="work-card-tag"><span class="tag-active"></span> Past Impact — SiriusXM</div>
+        <div class="work-card-title">Enterprise Timesheet Transformation · $48M Saved</div>
+        <div class="work-card-role">Product Lead (Product Owner) · Feb 2023 – Mar 2025</div>
+        <p class="work-card-body">Led the replacement of a legacy timesheet system with Tempo Timesheets in Jira, delivering $48M in annual savings. Mentored four engineering teams, piloted LLM-based intake triage automation, and served as Atlassian SME — optimizing workflows to cut cycle time by 22% and improve sprint predictability by 19%.</p>
+        <div class="work-card-metrics">
+          <span class="metric-pill">$48M Annual Savings</span>
+          <span class="metric-pill">79% Less Manual Work</span>
+          <span class="metric-pill">19% Sprint Predictability</span>
+          <span class="metric-pill">22% Cycle Time Reduction</span>
+          <span class="metric-pill">LLM Automation Pilot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <p class="section-tag reveal">About Me</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="section-title reveal" style="margin-bottom:28px">
+          A <em>storyteller</em> at heart,<br>with hard data to back it up.
+        </h2>
+        <p class="about-body reveal reveal-d1">
+          I'm a Technical Product Manager based in Austin, TX with 6+ years leading enterprise platform modernization, Agile delivery, AI-enabled workflow automation, and infrastructure transformation. My career runs through <strong>SiriusXM, Infosys, LoanDepot,</strong> and now <strong>Cutting Edge Tech.</strong>
+        </p>
+        <p class="about-body reveal reveal-d2">
+          My philosophy: every product tells a story. I find joy in crafting clarity from chaos and in building the kind of reporting that actually changes how decisions get made. I operate comfortably from the C-suite to the dev ticket and translate between both directions without losing anything in translation.
+        </p>
+        <p class="about-body reveal reveal-d3">
+          I hold a <strong>Master's in Information Technology and Management from UT Dallas</strong> and have spent years making Agile more than a buzzword: redesigning Jira workflows, running SAFe PI ceremonies, and piloting LLM-based automation before most teams had a prompt strategy.
+        </p>
+        <div class="cert-row reveal">
+          <span class="cert-chip">PMP</span>
+          <span class="cert-chip">SAFe 6 POPM</span>
+          <span class="cert-chip">CSPO</span>
+          <span class="cert-chip">AWS Solutions Architect</span>
+          <span class="cert-chip">Google UX &amp; PM</span>
+          <span class="cert-chip">MSITM · UT Dallas</span>
+        </div>
+      </div>
+      <div>
+        <span class="skills-label reveal">Core Competencies</span>
+        <div class="skill-item reveal reveal-d1">
+          <div class="skill-top"><span class="skill-name">Product Strategy &amp; Roadmapping</span><span class="skill-pct">96%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="96"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d2">
+          <div class="skill-top"><span class="skill-name">Agile / SAFe Delivery</span><span class="skill-pct">94%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="94"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d3">
+          <div class="skill-top"><span class="skill-name">Jira · ServiceNow · Confluence</span><span class="skill-pct">95%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="95"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d4">
+          <div class="skill-top"><span class="skill-name">Stakeholder Management</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="92"></div></div>
+        </div>
+        <div class="skill-item reveal">
+          <div class="skill-top"><span class="skill-name">AI &amp; LLM Workflow Automation</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="88"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d1">
+          <div class="skill-top"><span class="skill-name">Data Analytics &amp; KPI Reporting</span><span class="skill-pct">87%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="87"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d2">
+          <div class="skill-top"><span class="skill-name">Cross-Functional Leadership</span><span class="skill-pct">93%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="93"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d3">
+          <div class="skill-top"><span class="skill-name">Platform &amp; API Product Thinking</span><span class="skill-pct">84%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="84"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d4">
+          <div class="skill-top"><span class="skill-name">Prompt Engineering &amp; AI Strategy</span><span class="skill-pct">86%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="86"></div></div>
+        </div>
+        <div class="skill-item reveal">
+          <div class="skill-top"><span class="skill-name">Product-Led Growth (PLG)</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="80"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d1">
+          <div class="skill-top"><span class="skill-name">SQL &amp; Data-Driven Prioritization</span><span class="skill-pct">83%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="83"></div></div>
+        </div>
+        <div class="skill-item reveal reveal-d2">
+          <div class="skill-top"><span class="skill-name">Discovery &amp; User Research</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-pct="85"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact">
+  <div class="section-wrap">
+    <p class="section-tag reveal">✦ Signature Outcomes</p>
+    <h2 class="section-title reveal">Numbers that <em>moved</em> the business.</h2>
+    <div class="impact-grid">
+      <div class="impact-card reveal">
+        <span class="impact-co">SiriusXM Radio</span>
+        <span class="impact-num">$48M</span>
+        <div class="impact-title">Annual Business Impact</div>
+        <p class="impact-body">Led enterprise timesheet transformation delivering $48M in annual savings through roadmap prioritization and cross-functional execution.</p>
+      </div>
+      <div class="impact-card reveal reveal-d1">
+        <span class="impact-co">SiriusXM Radio</span>
+        <span class="impact-num">79%</span>
+        <div class="impact-title">Manual Work Eliminated</div>
+        <p class="impact-body">Implemented Tempo Timesheets in Jira, improving CAPEX/OPEX reporting accuracy and cutting manual tracking effort by 79%.</p>
+      </div>
+      <div class="impact-card reveal reveal-d2">
+        <span class="impact-co">SiriusXM Radio</span>
+        <span class="impact-num">19%</span>
+        <div class="impact-title">Sprint Predictability Gain</div>
+        <p class="impact-body">Optimized Jira workflows and cross-team boards as Atlassian SME, reducing cycle time by 22% and improving sprint predictability by 19%.</p>
+      </div>
+      <div class="impact-card reveal reveal-d3">
+        <span class="impact-co">Cutting Edge Tech</span>
+        <span class="impact-num">30%</span>
+        <div class="impact-title">Jira/Confluence Adoption</div>
+        <p class="impact-body">Drove workflow redesign and enablement across three enterprise initiatives, improving adoption by 30% and cutting onboarding cycle time by 20%.</p>
+      </div>
+      <div class="impact-card reveal reveal-d1">
+        <span class="impact-co">LoanDepot</span>
+        <span class="impact-num">$1M+</span>
+        <div class="impact-title">Revenue Impact</div>
+        <p class="impact-body">Delivered mortgage platform enhancements for a 75% Spanish-speaking user base, improving team velocity by 18% through structured sprint ceremonies.</p>
+      </div>
+      <div class="impact-card reveal reveal-d2">
+        <span class="impact-co">Infosys</span>
+        <span class="impact-num">91%</span>
+        <div class="impact-title">On-Time Release Delivery</div>
+        <p class="impact-body">Improved on-time delivery from 82% to 91% for a major US banking client by standardizing SOPs and triage across an 8-member support team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-wrap">
+    <p class="section-tag reveal">Career</p>
+    <h2 class="section-title reveal">How I got <em>here.</em></h2>
+    <div class="tl-list">
+      <div class="tl-line-fill" id="tlLineFill"></div>
+      <div class="tl-item reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Sep 2025 – Present</div>
+        <div class="tl-title">Technical Product Manager</div>
+        <div class="tl-co">Cutting Edge Tech · Austin, TX</div>
+        <p class="tl-body">Owns roadmap for infrastructure and logistics platforms across three enterprise initiatives. Leads ServiceNow and Jira automation reducing onboarding cycle time by 20%, manages cross-functional teams from analyst to VP level.</p>
+        <div class="tl-tags"><span class="tl-tag">ServiceNow</span><span class="tl-tag">Jira</span><span class="tl-tag">Roadmapping</span><span class="tl-tag">Agile</span></div>
+      </div>
+      <div class="tl-item reveal reveal-d1">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Feb 2023 – Mar 2025</div>
+        <div class="tl-title">Product Lead (Product Owner)</div>
+        <div class="tl-co">SiriusXM Radio · Austin, TX</div>
+        <p class="tl-body">Led enterprise timesheet transformation delivering $48M annual savings. Mentored four engineering teams, improved sprint predictability by 19%, and piloted LLM-based workflow automation for intake triage.</p>
+        <div class="tl-tags"><span class="tl-tag">$48M Impact</span><span class="tl-tag">Tempo Timesheets</span><span class="tl-tag">LLM Automation</span><span class="tl-tag">SAFe</span></div>
+      </div>
+      <div class="tl-item reveal reveal-d2">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Jun 2022 – Aug 2022</div>
+        <div class="tl-title">Agile Product Operations Intern</div>
+        <div class="tl-co">LoanDepot · Plano, TX</div>
+        <p class="tl-body">Delivered mortgage platform enhancements for 75% Spanish-speaking user base, driving $1M+ revenue. Improved team velocity by 18% through structured sprint ceremonies and backlog grooming.</p>
+        <div class="tl-tags"><span class="tl-tag">Scrum</span><span class="tl-tag">Backlog Grooming</span><span class="tl-tag">$1M+ Revenue</span></div>
+      </div>
+      <div class="tl-item reveal reveal-d3">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Jun 2019 – May 2021</div>
+        <div class="tl-title">Associate Product Manager / Technology Lead</div>
+        <div class="tl-co">Infosys Limited · Pune, India</div>
+        <p class="tl-body">Improved on-time delivery from 82% to 91% for a major US banking client. Managed a self-service platform launch across three enterprise platforms in eleven months, standardizing SOPs and reducing repeat incidents by 15%.</p>
+        <div class="tl-tags"><span class="tl-tag">Banking</span><span class="tl-tag">UAT Coordination</span><span class="tl-tag">SLA Management</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-wrap">
+    <p class="section-tag reveal">Expertise</p>
+    <h2 class="section-title reveal">What I <em>bring</em> to the table.</h2>
+    <div class="expertise-grid">
+      <div class="exp-card reveal">
+        <span class="exp-num">01</span>
+        <h3 class="exp-title">Product Strategy &amp; Ownership</h3>
+        <p class="exp-body">End-to-end roadmap development, backlog prioritization, and feature definition grounded in user research, KPI data, and business outcomes. I own the "what" and "why" so engineering can own the "how."</p>
+        <div class="exp-tags"><span class="exp-tag">Roadmapping</span><span class="exp-tag">PRD / BRD</span><span class="exp-tag">OKRs</span><span class="exp-tag">Go-to-Market</span></div>
+      </div>
+      <div class="exp-card reveal reveal-d1">
+        <span class="exp-num">02</span>
+        <h3 class="exp-title">Enterprise Platform Modernization</h3>
+        <p class="exp-body">I've led migrations off legacy systems that teams had been using for a decade. From scoping to cutover, I manage the technical complexity and the human resistance that always shows up halfway through. The goal is zero disruption to delivery while the floor gets replaced underneath you.</p>
+        <div class="exp-tags"><span class="exp-tag">Platform Migration</span><span class="exp-tag">Change Management</span><span class="exp-tag">Jira / ServiceNow</span><span class="exp-tag">Adoption Strategy</span></div>
+      </div>
+      <div class="exp-card reveal reveal-d2">
+        <span class="exp-num">03</span>
+        <h3 class="exp-title">AI &amp; Workflow Automation</h3>
+        <p class="exp-body">Piloted LLM-based automation for intake triage and reporting before most teams had a prompt strategy. I identify where AI creates real leverage and build the workflows that deliver it.</p>
+        <div class="exp-tags"><span class="exp-tag">LLMs</span><span class="exp-tag">Prompt Engineering</span><span class="exp-tag">ServiceNow</span><span class="exp-tag">Automation</span></div>
+      </div>
+      <div class="exp-card reveal reveal-d3">
+        <span class="exp-num">04</span>
+        <h3 class="exp-title">Stakeholder &amp; Cross-Functional Leadership</h3>
+        <p class="exp-body">I operate from the C-suite to the dev ticket. I translate business goals into technical requirements and constraints back into language leadership understands. Managing 10 across three locations is Tuesday.</p>
+        <div class="exp-tags"><span class="exp-tag">Executive Reporting</span><span class="exp-tag">Workshop Facilitation</span><span class="exp-tag">Change Management</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section id="quote">
+  <div class="quote-inner">
+    <span class="quote-mark reveal">&ldquo;</span>
+    <p class="quote-text reveal reveal-d1">
+      Every product tells a story. I find joy in crafting clarity from chaos and in the quiet work of turning a stakeholder's goal into a <span class="accent">sprint that ships.</span>
+    </p>
+    <div class="quote-attr reveal reveal-d2">Sonu Thakur · Technical Product Manager</div>
+  </div>
+</section>
+
+<!-- HOW I THINK -->
+<section id="thinking">
+  <div class="section-wrap">
+    <p class="section-tag reveal">✦ From the Blog</p>
+    <h2 class="section-title reveal">How I <em>Think</em></h2>
+    <div class="thinking-grid">
+
+      <div class="think-card reveal" onclick="openArticle('a1')" style="cursor:pointer">
+        <div class="think-card-type"><span class="think-card-type-dot"></span>Case Study</div>
+        <div class="think-card-title">From Legacy to $48M Saved: How We Replaced a Timesheet System Without Breaking Engineering</div>
+        <p class="think-card-body">Most enterprise tooling migrations fail at adoption, not technology. Here's the playbook we used to move four engineering teams off a 10-year-old system, get Tempo Timesheets live in Jira, and eliminate 79% of manual tracking effort in under six months.</p>
+        <div class="think-card-meta">
+          <span class="think-card-read">8 min · SiriusXM</span>
+          <span class="think-card-arrow">↗</span>
+        </div>
+      </div>
+
+      <div class="think-card reveal reveal-d1" onclick="openArticle('a2')" style="cursor:pointer">
+        <div class="think-card-type"><span class="think-card-type-dot"></span>Strategy</div>
+        <div class="think-card-title">Why Sprint Predictability Is the Wrong Metric (And What to Measure Instead)</div>
+        <p class="think-card-body">Teams obsess over velocity. I obsess over predictability drift, the gap between what a team commits to and what actually ships. After redesigning Jira workflows across five teams, here's what the data actually showed about where delivery breaks down.</p>
+        <div class="think-card-meta">
+          <span class="think-card-read">6 min · Agile &amp; Delivery</span>
+          <span class="think-card-arrow">↗</span>
+        </div>
+      </div>
+
+      <div class="think-card reveal reveal-d2" onclick="openArticle('a3')" style="cursor:pointer">
+        <div class="think-card-type"><span class="think-card-type-dot"></span>AI &amp; Product</div>
+        <div class="think-card-title">The LLM Pilot Nobody Talks About: Using AI for Intake Triage Before It Was Trendy</div>
+        <p class="think-card-body">In 2024, we ran a quiet pilot: could an LLM route incoming work requests faster than a human triage queue? The short answer was yes. The longer answer involved prompt engineering, hallucination guard rails, and a lot of stakeholder skepticism we had to earn our way past.</p>
+        <div class="think-card-meta">
+          <span class="think-card-read">7 min · AI Strategy</span>
+          <span class="think-card-arrow">↗</span>
+        </div>
+      </div>
+
+      <div class="think-card reveal reveal-d3" onclick="openArticle('a4')" style="cursor:pointer">
+        <div class="think-card-type"><span class="think-card-type-dot"></span>Product Operations</div>
+        <div class="think-card-title">How I Run Stakeholder Reviews That Don't Feel Like Status Theater</div>
+        <p class="think-card-body">Most stakeholder reviews are theater: a deck, a lot of nodding, and zero decisions. Over six years of managing cross-functional programs, I built a format that consistently produces alignment, not just attendance. This is the structure, and why it works.</p>
+        <div class="think-card-meta">
+          <span class="think-card-read">5 min · Leadership</span>
+          <span class="think-card-arrow">↗</span>
+        </div>
+      </div>
+
+    </div>
+
+    <a class="medium-cta reveal" href="https://medium.com/@sonuthakurwork" target="_blank" rel="noopener">
+      <div class="medium-cta-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+      </div>
+      <div class="medium-cta-text">
+        <span class="medium-cta-label">Read More</span>
+        <span class="medium-cta-title">Follow my writing on Medium ↗</span>
+      </div>
+      <span class="medium-cta-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ARTICLE READER MODAL -->
+<div id="article-overlay" onclick="closeArticle(event)">
+  <div id="article-panel">
+    <button id="article-close" onclick="closeArticle(null, true)" aria-label="Close">&times;</button>
+    <div id="article-body"></div>
+    <a href="https://medium.com/@sonuthakurwork" target="_blank" rel="noopener" id="article-medium-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
+      Read on Medium
+    </a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-wrap">
+    <p class="section-tag reveal">Get In Touch</p>
+    <div class="contact-grid">
+      <div>
+        <h2 class="contact-heading reveal">
+          Let's build<br><em>something.</em>
+        </h2>
+        <div class="contact-links">
+          <div class="contact-link-item reveal reveal-d1">
+            <span class="contact-link-label">Email</span>
+            <a href="mailto:connect.sonuthakurwork@gmail.com" class="contact-link-value">connect.sonuthakurwork@gmail.com</a>
+          </div>
+          <div class="contact-link-item reveal reveal-d2">
+            <span class="contact-link-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/sxs200286" target="_blank" rel="noopener" class="contact-link-value">linkedin.com/in/sxs200286</a>
+          </div>
+          <div class="contact-link-item reveal reveal-d3">
+            <span class="contact-link-label">Medium</span>
+            <a href="https://medium.com/@sonuthakurwork" target="_blank" rel="noopener" class="contact-link-value">medium.com/@sonuthakurwork</a>
+          </div>
+          <div class="contact-link-item reveal">
+            <span class="contact-link-label">Phone</span>
+            <a href="tel:+15202330317" class="contact-link-value">+1 (520) 233-0317</a>
+          </div>
+          <div class="contact-link-item reveal reveal-d1">
+            <span class="contact-link-label">Location</span>
+            <span class="contact-link-value" style="cursor:default;border:none">Austin, TX · Open to Relocation</span>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form reveal reveal-d1" id="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-field">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label for="cf-msg">Message</label>
+          <textarea id="cf-msg" name="message" placeholder="Tell me about the role or opportunity..." rows="4"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-mark">Sonu Thakur</span>
+  <span class="footer-copy">&copy; 2026 · Built with intent.</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/sxs200286" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://calendly.com/sonuthakurugc" target="_blank" rel="noopener">Calendly</a>
+    <a href="mailto:connect.sonuthakurwork@gmail.com">Email</a>
+  </div>
+</footer>
+
+<script>
+// ── PAGE LOAD CURTAIN ──────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('curtain').classList.add('gone');
+  }, 600);
+});
+
+// ── SCROLL PROGRESS BAR ────────────────────────────────
+const progressBar = document.getElementById('scroll-progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  progressBar.style.width = (pct * 100).toFixed(2) + '%';
+}, { passive: true });
+
+// ── HERO PARTICLE CANVAS ───────────────────────────────
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  const COLORS = ['rgba(166,207,234,', 'rgba(22,104,168,', 'rgba(218,234,246,'];
+  const COUNT  = 48;
+
+  function randParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.8 + 0.4,
+      alpha: Math.random() * 0.5 + 0.15,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    };
+  }
+  for (let i = 0; i < COUNT; i++) particles.push(randParticle());
+
+  // draw connecting lines
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 110) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(166,207,234,${(1 - dist/110) * 0.12})`;
+          ctx.lineWidth = 1;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+    drawLines();
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// ── TYPING CURSOR ON HERO TITLE ────────────────────────
+(function() {
+  const title = document.querySelector('.hero-title');
+  if (!title) return;
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor-blink';
+  title.appendChild(cursor);
+  // remove cursor after 4s
+  setTimeout(() => {
+    cursor.style.transition = 'opacity 0.5s';
+    cursor.style.opacity = '0';
+    setTimeout(() => cursor.remove(), 500);
+  }, 4200);
+})();
+
+// ── BADGE STAGGER ENTRANCE ─────────────────────────────
+setTimeout(() => {
+  document.querySelectorAll('.badge').forEach((b, i) => {
+    setTimeout(() => b.classList.add('badge-in'), 700 + i * 110);
+  });
+}, 300);
+
+// ── MAGNETIC BUTTONS ───────────────────────────────────
+document.querySelectorAll('.btn-solid, .btn-ghost').forEach(btn => {
+  btn.addEventListener('mousemove', e => {
+    const r  = btn.getBoundingClientRect();
+    const dx = e.clientX - (r.left + r.width  / 2);
+    const dy = e.clientY - (r.top  + r.height / 2);
+    btn.style.transform = `translate(${dx * 0.18}px, ${dy * 0.22}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// ── NAV on scroll ──────────────────────────────────────
+const mainNav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  mainNav.style.boxShadow = window.scrollY > 40
+    ? '0 2px 24px rgba(10,30,48,0.08)' : 'none';
+}, { passive: true });
+
+// ── HAMBURGER / DRAWER ─────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const drawerOverlay = document.getElementById('drawerOverlay');
+function openDrawer() {
+  hamburger.classList.add('open'); mobileDrawer.classList.add('open');
+  drawerOverlay.classList.add('open'); document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  hamburger.classList.remove('open'); mobileDrawer.classList.remove('open');
+  drawerOverlay.classList.remove('open'); document.body.style.overflow = '';
+}
+hamburger.addEventListener('click', () => hamburger.classList.contains('open') ? closeDrawer() : openDrawer());
+hamburger.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); hamburger.classList.contains('open') ? closeDrawer() : openDrawer(); }});
+drawerOverlay.addEventListener('click', closeDrawer);
+
+// ── STAT COUNTER ANIMATION ─────────────────────────────
+function parseNum(str) {
+  // returns {prefix, value, suffix}
+  const m = str.match(/^([^0-9]*)([0-9,.]+)([^0-9]*)$/);
+  if (!m) return null;
+  return { prefix: m[1], value: parseFloat(m[2].replace(/,/g,'')), suffix: m[3] };
+}
+function animateCounter(el) {
+  const parsed = parseNum(el.textContent);
+  if (!parsed) return;
+  const { prefix, value, suffix } = parsed;
+  const duration = 1400;
+  const start = performance.now();
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = eased * value;
+    const display = value < 10
+      ? current.toFixed(0)
+      : Math.round(current).toLocaleString();
+    el.textContent = prefix + display + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = prefix + value.toLocaleString() + suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+// ── SECTION TITLE UNDERLINE ────────────────────────────
+const titleObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('title-in');
+      titleObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.section-title').forEach(el => titleObs.observe(el));
+
+// ── TIMELINE LINE DRAW ON SCROLL ───────────────────────
+const tlList = document.querySelector('.tl-list');
+const tlFill = document.getElementById('tlLineFill');
+function updateTlLine() {
+  if (!tlList || !tlFill) return;
+  const rect = tlList.getBoundingClientRect();
+  const viewH = window.innerHeight;
+  if (rect.top > viewH) return;
+  const visible = Math.min(viewH, rect.bottom) - Math.max(0, rect.top);
+  const total   = rect.height;
+  const scrolled = -rect.top + viewH * 0.3;
+  const pct = Math.max(0, Math.min(1, scrolled / total));
+  tlFill.style.height = (pct * 100).toFixed(1) + '%';
+}
+window.addEventListener('scroll', updateTlLine, { passive: true });
+updateTlLine();
+
+// ── REVEAL + SKILL BARS + COUNTERS ────────────────────
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // skill bars
+      entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.pct + '%';
+      });
+      // stat counters
+      entry.target.querySelectorAll('.stat-num').forEach(el => {
+        animateCounter(el);
+      });
+      // impact number count-up
+      entry.target.querySelectorAll('.impact-num').forEach(el => {
+        animateCounter(el);
+        setTimeout(() => el.classList.add('counted'), 1300);
+      });
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+// ── ACTIVE NAV ─────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks  = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 80) current = sec.id; });
+  navLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      a.style.background = href === '#' + current ? 'var(--blue-pale)' : '';
+      a.style.color = href === '#' + current ? 'var(--blue)' : '';
+    }
+  });
+}, { passive: true });
+
+// ── ARTICLE READER ─────────────────────────────────────
+const ARTICLES = {
+  a1: {
+    type: 'Case Study',
+    title: 'From Legacy to $48M Saved: How We Replaced a Timesheet System Without Breaking Engineering',
+    meta: '8 min read · SiriusXM · 2024',
+    body: `
+      <p>Enterprise tooling migrations have a reputation for being painful. They go over budget, under-deliver on adoption, and leave engineering teams with two systems to maintain instead of one. I've watched it happen. At SiriusXM, I was determined to do it differently.</p>
+      <h3>The Problem</h3>
+      <p>The existing timesheet system had been in place for over a decade. It wasn't just a tool, it was embedded in how finance tracked CAPEX versus OPEX, how project managers reported utilization, and how four engineering teams planned their quarters. Replacing it meant touching every one of those workflows simultaneously.</p>
+      <p>The business case was clear: <strong>manual reconciliation was eating 79% of the effort</strong> that should have gone into actual reporting. Finance was spending days each month correcting data that should have flowed automatically. That inefficiency, scaled across the organization, translated directly to cost.</p>
+      <h3>The Approach</h3>
+      <div class="art-highlight">The mistake most teams make is treating migration as a technical project. It isn't. It's a change management project with a technical component.</div>
+      <p>I started by mapping every stakeholder group: who was entering data, who was consuming reports, who was approving submissions, and who would feel the change most acutely. We ran discovery sessions not to gather requirements, but to understand the workarounds people had built over years. Those workarounds told us where the old system had failed them, and they told us exactly what the new one needed to replicate or improve.</p>
+      <p>We chose Tempo Timesheets in Jira because it sat inside the tooling engineering already used every day. Adoption friction drops dramatically when the new workflow lives where people already spend their time.</p>
+      <h3>The Rollout</h3>
+      <p>We ran a phased rollout: one team at a time, with a two-week parallel period where both systems were live. I built a dashboard that surfaced discrepancies between the two in real time, which gave us a safety net and gave stakeholders confidence that we weren't flying blind. By week three of each rollout phase, the parallel period was always uneventful.</p>
+      <p>Four engineering teams. Six months. <strong>$48M in annual savings</strong> validated by finance. Manual tracking effort reduced by 79%. And not a single sprint derailed during the transition.</p>
+      <h3>What I'd Tell Anyone Doing This</h3>
+      <p>Win the skeptics before you start. Find the person on each team who has the most to lose and make them your co-owner. When they become advocates, everyone else follows. And never underestimate how much a good real-time dashboard does for stakeholder confidence when things feel uncertain.</p>
+    `
+  },
+  a2: {
+    type: 'Strategy',
+    title: 'Why Sprint Predictability Is the Wrong Metric (And What to Measure Instead)',
+    meta: '6 min read · Agile & Delivery · 2024',
+    body: `
+      <p>Velocity is the metric every Agile team tracks and almost no one should trust. It tells you how much work a team moved last sprint. It tells you almost nothing about whether the team will move the same amount next sprint, or whether what they moved actually mattered.</p>
+      <h3>The Predictability Problem</h3>
+      <p>After redesigning Jira workflows across five teams at SiriusXM, I had access to eighteen months of sprint data. What I found was a consistent pattern: teams with high velocity had high variance. Teams with moderate velocity often had far tighter, more predictable cycles. The ones leadership trusted most were not the fastest, they were the most consistent.</p>
+      <div class="art-highlight">Predictability is trust made visible. A team that consistently delivers 80% of what it commits to is more valuable to a business than one that sometimes delivers 120% and sometimes delivers 40%.</div>
+      <h3>What I Measured Instead</h3>
+      <p>I introduced three metrics across the teams I worked with. First, <strong>commitment accuracy</strong>: the ratio of points committed at sprint start to points completed at sprint end, averaged over a rolling eight-week window. Second, <strong>scope change rate</strong>: how often work was added or removed mid-sprint, which is the hidden killer of predictability that velocity completely obscures. Third, <strong>cycle time by work type</strong>: bugs, features, and tech debt each have different natural rhythms, and mixing them without accounting for that inflates variance artificially.</p>
+      <h3>The Jira Changes That Actually Moved the Needle</h3>
+      <p>We added a mandatory "sprint goal" field that required one sentence describing the outcome, not the output, of the sprint. That single field changed how teams scoped work. When the goal is visible, mid-sprint additions that don't serve it are easier to push back on.</p>
+      <p>We also stopped allowing story points to be edited after sprint start. It sounds obvious, but it was happening constantly: a ticket would balloon mid-sprint and the team would quietly update the estimate. That masked the real variance and made planning look better than it was.</p>
+      <p>Within two quarters, sprint predictability across the five teams improved by 19%. Velocity barely changed. What changed was the signal-to-noise ratio in the data, and that changed how every planning conversation felt.</p>
+    `
+  },
+  a3: {
+    type: 'AI & Product',
+    title: 'The LLM Pilot Nobody Talks About: Using AI for Intake Triage Before It Was Trendy',
+    meta: '7 min read · AI Strategy · 2024',
+    body: `
+      <p>In early 2024, before most product teams had done more than add a ChatGPT button to their roadmap, we ran a quiet pilot at SiriusXM: could a large language model route incoming work requests faster and more accurately than our existing human triage queue?</p>
+      <h3>The Context</h3>
+      <p>Our intake process was a bottleneck. Requests came in from across the organization, with inconsistent formatting, missing context, and no standard categorization. A small team spent meaningful hours each week just deciding where things should go, often asking the requester for clarification before any real triage even started. The delay wasn't laziness. It was a structural problem: there were no guardrails on how people submitted work, so every submission was a judgment call.</p>
+      <h3>The Pilot Design</h3>
+      <div class="art-highlight">We didn't try to automate the decision. We tried to automate the preparation for the decision. That distinction is the difference between a useful AI tool and a liability.</div>
+      <p>We built a lightweight wrapper around an LLM that ingested incoming requests, extracted structured fields (team, priority signal, dependency indicators, estimated size), and returned a pre-filled routing suggestion with a confidence score. A human made the final call. The model prepared the ground.</p>
+      <p>Prompt engineering was the core work. We spent two weeks writing, testing, and iterating on prompts before touching any infrastructure. We tested against three months of historical requests where we already knew the correct routing. The model's suggestions agreed with the historical outcomes <strong>83% of the time on first pass</strong>. After refinement, that number reached 91%.</p>
+      <h3>The Stakeholder Problem</h3>
+      <p>The harder challenge wasn't technical. It was convincing the team that reviewed intake requests that the model was a tool, not a replacement. Early on, there was a tendency to either over-trust the suggestion (rubber-stamping without reading) or reject it reflexively (not using it at all). We added a mandatory comment field that required the reviewer to note whether they agreed, disagreed, or modified the suggestion, and why. That created accountability and generated the kind of feedback loop that actually improved the model over time.</p>
+      <h3>What It Taught Me About AI in Product Work</h3>
+      <p>AI in a product workflow is most useful when it handles the cognitive overhead before a human judgment, not instead of it. The goal was never to remove the human from triage. It was to make the human's time in triage more focused on the parts that actually required judgment. That reframing is everything. If your AI pitch to stakeholders sounds like "it will replace this step," you'll lose them. If it sounds like "it will make you better at this step," you have a chance.</p>
+    `
+  },
+  a4: {
+    type: 'Product Operations',
+    title: 'How I Run Stakeholder Reviews That Don\'t Feel Like Status Theater',
+    meta: '5 min read · Leadership · 2025',
+    body: `
+      <p>Most stakeholder reviews are theater. A slide deck gets presented. People nod. Someone asks a question that delays the meeting by twelve minutes. Nothing gets decided. Everyone leaves, and the next meeting is scheduled to discuss the same things again.</p>
+      <p>I've sat through hundreds of these. I've also run them, and early in my career I ran them badly. Over six years of managing cross-functional programs at SiriusXM, LoanDepot, and Cutting Edge Tech, I developed a format that I've now used across dozens of programs. It consistently produces decisions, not just attendance.</p>
+      <h3>The Core Problem</h3>
+      <div class="art-highlight">A review meeting has failed before it starts if the goal is to inform. Information can be sent in an email. The only reason to gather senior stakeholders in a room is to get decisions that require their authority.</div>
+      <p>That sounds obvious. It isn't, because the instinct when presenting to leadership is to show your work. To build credibility by demonstrating how much has happened. That instinct is understandable and almost always counterproductive. Leadership doesn't need to see the work. They need to make calls that unblock it.</p>
+      <h3>The Format</h3>
+      <p>I send a one-page pre-read 48 hours before the meeting. It covers: what's been decided since the last review, what's on track, what's at risk, and critically, what decisions are needed in this session. That last section is the only one that actually matters for the meeting itself. Everything else is context.</p>
+      <p>The meeting starts not with a status update but with the decision list. We go item by item. For each one, I state the options, state my recommendation, and ask for a call. I keep a live notes doc open on screen so everyone can see what's being recorded as decisions versus as actions. This removes the ambiguity that kills most post-meeting follow-through.</p>
+      <h3>The Thing That Changed Everything</h3>
+      <p>I started ending every review with a "parking lot" that I explicitly named: things that came up that we won't decide today, and who owns bringing them to the next session. Naming what we're not deciding is as important as naming what we are. It stops the meeting from expanding to fill every concern in the room.</p>
+      <p>The result: reviews that run 30 minutes instead of 90, with a clear decision log that goes out within the hour. Stakeholders show up prepared because they know the pre-read is worth reading. And the program keeps moving because the blockers don't linger for another two-week cycle.</p>
+    `
+  }
+};
+
+function openArticle(id) {
+  const a = ARTICLES[id];
+  if (!a) return;
+  const overlay = document.getElementById('article-overlay');
+  const body    = document.getElementById('article-body');
+  body.innerHTML = `
+    <div class="art-type">${a.type}</div>
+    <h2 class="art-title">${a.title}</h2>
+    <div class="art-meta">${a.meta}</div>
+    <div class="art-body">${a.body}</div>
+  `;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // scroll panel to top
+  document.getElementById('article-panel').scrollTop = 0;
+}
+
+function closeArticle(e, force) {
+  if (!force && e && e.target !== document.getElementById('article-overlay')) return;
+  document.getElementById('article-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeArticle(null, true);
+});
+function handleSubmit(e) {
+  e.preventDefault();
+  const form    = e.target;
+  const name    = form.querySelector('#cf-name').value.trim();
+  const email   = form.querySelector('#cf-email').value.trim();
+  const message = form.querySelector('#cf-msg').value.trim();
+  const btn     = form.querySelector('.form-submit');
+
+  if (!name || !email || !message) {
+    btn.textContent = 'Fill all fields';
+    btn.style.background = '#b45309';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; }, 2200);
+    return;
+  }
+
+  const subject = encodeURIComponent('Portfolio Enquiry from ' + name);
+  const body    = encodeURIComponent(
+    'Hi Sonu,\n\nMy name is ' + name + ' (' + email + ').\n\n' + message + '\n\nBest,\n' + name
+  );
+
+  window.location.href = 'mailto:connect.sonuthakurwork@gmail.com?subject=' + subject + '&body=' + body;
+
+  btn.textContent = 'Opening mail app \u2713';
+  btn.style.background = '#166534';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.style.background = '';
+    btn.disabled = false;
+    form.reset();
+  }, 3500);
+}
+</script>
+</body>
+</html>
